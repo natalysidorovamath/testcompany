@@ -43,17 +43,25 @@ namespace MindBoxLibrary
                 arr[2 * mPart + len] = k;
                 len++;
             }
-            if (mPart == 3)  CorrectValue(res, preRes);
+            if (arr.Length % mPart != 0)
+                for (int i = arr.Length - mPart; i < arr.Length; i++)
+                {
+                    var min = i;
+                    for (var j = i + 1; j < arr.Length; j++)
+                    {
+                        if (arr[min] > arr[j])
+                        {
+                            min = j;
+                        }
+                    }
+                    if (min != i)
+                    {
+                        var lowerValue = arr[min];
+                        arr[min] = arr[i];
+                        arr[i] = lowerValue;
+                    }
+                }
                 Console.WriteLine("результат вычислений [{0}]", string.Join(", ", arr));
-        }
-        private void CorrectValue(int res, int preRes)
-        {
-            int otl = 0;
-            for (int i = arr.Length-3; i< arr.Length; i++){
-                if(arr[i] != res && arr[i] != preRes)
-                otl =  arr[i];
-            }
-            arr[arr.Length - 1] = res; arr[arr.Length - 2] = preRes; arr[arr.Length-3] = otl;
         }
     }
 }
